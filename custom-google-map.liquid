@@ -1,0 +1,83 @@
+{%- assign mp_lat = section.settings.map_lat -%}
+{%- assign mp_long = section.settings.map_long -%}
+{%- assign google_map_key = section.settings.google_map_key -%}
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key={{google_map_key}}&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>  
+       
+    <div id="map" style="width:98%; height:400px; position: relative;
+    overflow: inherit !important;" > map </div>
+   
+<script>
+    var map_lat = parseInt(`{{ mp_lat }}`);
+
+    var map_long =parseInt( `{{ mp_long }}`);
+
+    console.log("type of lat and long ", typeof( map_lat),typeof(map_long))
+
+    // Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  //const uluru = { lat: map_lat, lng: map_long };
+  const uluru = { lat: -25.344, lng: 131.036 }; 
+  // The map, centered at Uluru
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: uluru,
+  });
+
+  console.log("map",map)
+  // The marker, positioned at Uluru
+  const marker = new google.maps.Marker({
+    position: uluru,
+    map: map,
+  });
+
+  console.log("marker",marker)
+}
+  </script>
+
+
+{% schema %}
+{
+    "name":"custom google map",
+    "class": "cs-gm",
+  "settings": [
+    {
+        "type": "header",
+        "content": "Customer Service Menu Item"
+    },
+    {
+        "type": "text",
+        "id":"google_map_key",
+        "label":"Engter valid google map key"
+    },
+    {
+        "type": "header",
+        "content": "Add map latitude and longitude"
+    },
+    {
+        "type": "text",
+        "id":"map_lat",
+        "label":"Engter valid latitude "
+    },
+    {
+        "type": "text",
+        "id":"map_long",
+        "label":"Engter valid longitude "
+    }
+    ]
+      
+
+}
+{% endschema %}
+
+{% stylesheet %}
+    
+{% endstylesheet %}
+
+{% javascript %}
+    
+{% endjavascript %}
