@@ -1,0 +1,398 @@
+{% style %}
+  #shopify-section-{{section.id}} {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  #shopify-section-{{section.id}} .image-with-text {
+    padding-top: {{ section.settings.section_spacing_mobile }}px;
+    padding-bottom: {{ section.settings.section_spacing_mobile }}px;
+  }
+
+  @media screen and (min-width: 720px) {
+    #shopify-section-{{section.id}} .image-with-text {
+      padding-top: {{ section.settings.section_spacing_desktop }}px;
+      padding-bottom: {{ section.settings.section_spacing_desktop }}px;
+    }
+  }
+
+{% endstyle %}
+
+{% assign onboarding = false %}
+
+{% if section.settings.image == blank %}
+  {% assign onboarding = true %}
+{% endif %}
+
+<section id="image-over-home-sec"
+  class=" home-section--content 
+    image-with-text
+    image-with-text-section-height-{{ section.settings.section_height }}
+  "
+>
+  <div class="image-with-text-wrapper">
+    <div
+      class="image-with-text-background"
+      {% if section.settings.image != blank %}
+        {% capture background_style %}
+          {% if section.settings.section_height == 'original' %}
+            padding-bottom: {{- 100 | divided_by: section.settings.image.aspect_ratio -}}%;
+          {% endif %}
+          background-position: {{ section.settings.position }};
+        {% endcapture %}
+
+        {%- case section.settings.position -%}
+          {%- when 'top left' -%}
+            {%- assign crop = false -%}
+          {%- when 'top center' -%}
+            {%- assign crop = 'top' -%}
+          {%- when 'top right' -%}
+            {%- assign crop = false -%}
+          {%- when 'center left' -%}
+            {%- assign crop = 'left' -%}
+          {%- when 'center center' -%}
+            {%- assign crop = 'center' -%}
+          {%- when 'center right' -%}
+            {%- assign crop = 'right' -%}
+          {%- when 'bottom left' -%}
+            {%- assign crop = false -%}
+          {%- when 'bottom center' -%}
+            {%- assign crop = 'bottom' -%}
+          {%- when 'bottom right' -%}
+            {%- assign crop = false -%}
+          {%- else -%}
+            {%- assign crop = false -%}
+        {%- endcase -%}
+
+        {%
+          include 'rimg',
+          img: section.settings.image,
+          size: '1400x',
+          crop: crop,
+          style: background_style,
+          lazy: settings.lazy_load,
+          background: true
+        %}
+      {% endif %}
+      >
+      {% if onboarding %}
+        {{ 'lifestyle-1' | placeholder_svg_tag }}
+      {% endif %}
+    </div>
+
+    {% if section.settings.overlay_opacity != 0
+      and section.settings.overlay_background != 'rgba(0,0,0,0)'
+      and section.settings.overlay_style != 'none'
+    %}
+      {% assign opacity = section.settings.overlay_opacity | times: 0.01 %}
+
+      {% capture overlay_css %}
+        {%- if section.settings.overlay_style == 'solid' -%}
+          background-color: {{ section.settings.overlay_background | color_modify: 'alpha', opacity }};
+        {%- else -%}
+          {%- if section.settings.content_position contains 'top' -%}
+            {%- assign text_position = 'top' -%}
+          {%- elsif section.settings.content_position contains 'bottom' -%}
+            {%- assign text_position = 'bottom' -%}
+          {%- else -%}
+            {%- assign text_position = section.settings.content_position | remove: 'center-' -%}
+          {%- endif -%}
+          background: {%-
+            include 'gradient',
+            color: section.settings.overlay_background,
+            opacity: opacity,
+            text_position: text_position,
+          -%};
+        {%- endif -%}
+      {% endcapture %}
+      <div
+        class="image-with-text-overlay"
+        style="{{ overlay_css }}"
+      ></div>
+    {% endif %}
+
+    <div id="img-bg-lp"
+      class="
+        image-with-text-content-wrapper
+        image-with-text-content-position-y-{{ section.settings.content_position | split: '-' | first }}
+        image-with-text-content-position-x-{{ section.settings.content_position | split: '-' | last }}
+      "
+    >
+        <div
+          class="image-with-text-content"
+          style="color: {{ section.settings.color }};"
+        >
+        {% if section.settings.title != blank %}
+          <h2
+            class="image-with-text-hd"
+          >
+            {{ section.settings.title | escape }}
+          </h2>
+        {% endif %}
+        {% if section.settings.title-1 != blank %}
+          <h2
+            class="image-with-text-hdd"
+          >
+            {{ section.settings.title-1 | escape }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.text != blank %}
+          <div id="image-with-text-hd-sb" class="image-with-text-subheading rte"   >
+            {{ section.settings.text }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.button_text != blank %}
+          <span class="image-with-text-button">
+            {{ section.settings.button_text | escape }}
+          </span>
+        {% endif %}
+
+        {% if section.settings.link != blank %}
+          <a
+            class="image-with-text-link"
+            href="{{ section.settings.link }}"
+          ></a>
+        {% endif %}
+        </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image BG text overlap",
+  "class": "shopify-section   image-with-text-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        },
+        {
+          "value": "original",
+          "label": "Original aspect ratio"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background color"
+    },
+    {
+      "type": "range",
+      "id": "section_spacing_desktop",
+      "label": "Desktop section spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_spacing_mobile",
+      "label": "Mobile section spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Position",
+      "info": "Adjusts the focal point of the image. This setting will not have a noticeable impact if the dimensions of your image match the dimensions of the section.",
+      "options": [
+        {
+          "label": "Top left",
+          "value": "top left"
+        },
+        {
+          "label": "Top center",
+          "value": "top center"
+        },
+        {
+          "label": "Top right",
+          "value": "top right"
+        },
+        {
+          "label": "Center left",
+          "value": "center left"
+        },
+        {
+          "label": "Center middle",
+          "value": "center center"
+        },
+        {
+          "label": "Center right",
+          "value": "center right"
+        },
+        {
+          "label": "Bottom left",
+          "value": "bottom left"
+        },
+        {
+          "label": "Bottom center",
+          "value": "bottom center"
+        },
+        {
+          "label": "Bottom right",
+          "value": "bottom right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "ZERONITO"
+    },
+    {
+      "type": "text",
+      "id": "title-1",
+      "label": "Heading 2",
+      "default": "espresso"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Beställ här!</p>"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "center-left",
+          "label": "Center left"
+        },
+        {
+          "value": "center-center",
+          "label": "Center center"
+        },
+        {
+          "value": "center-right",
+          "label": "Center right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center-center"
+    },
+    {
+      "type":      "select",
+      "id":        "overlay_style",
+      "label":     "Overlay style",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default":   "solid"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_background",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Background color opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Button"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Image BG with text overlap"
+    }
+  ]
+}
+
+{% endschema %}
