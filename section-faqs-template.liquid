@@ -88,7 +88,72 @@
 {% endschema %}
 
 {% stylesheet %}
+/* faqs css*/
+.faq-ac {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  /* background: #0B2647; */
+  color: black;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  text-align: center;
+/*   height: 100vh; */
+  padding: 20px 0;
+}
+.faq-ac h1 {
+  font-size: clamp(20px, 4vw, 30px);
+  line-height: 1.2;
+  margin-bottom: 40px;
+  margin:0px;
+}
+.faq-ac summary{
+  color: blue;
+}
+.faq__content p{
+	/* color:#f3e488; */
+}
+.faq-ac main {
+  max-width: 85% !important;
+  margin: 0 auto;
+  padding: 10px;
 
+}
+summary {
+  font-size: 1.25rem;
+  font-weight: 600;
+  background-color: #fff;
+  color: #333;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  outline: none;
+  border-radius: 0.25rem;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+.dt-faq details{ display: none;}
+/* details[open] summary ~ * {
+  animation: sweep .5s ease-in-out;
+} */
+@keyframes sweep {
+  0%    {opacity: 0; margin-top: -10px}
+  100%  {opacity: 1; margin-top: 0px}
+}
+/*
+details > summary::after {
+  position: absolute;
+  content: "+";
+  right: 20px;
+}
+details[open] > summary::after {
+  position: absolute;
+  content: "-";
+  right: 20px;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}*/
 {% endstylesheet %}
 
 {% javascript %}
