@@ -1,0 +1,93 @@
+
+{% if page.content.size > 0 %}
+    <div class="rte">
+    {{ page.content }}
+    </div>
+{% endif %}
+
+
+<div class="grid grid--uniform">
+    <div class="grid__item" > 
+      <h4 class="pl-pt-pb-h4">{{section.settings.box-title}}</h4> 
+  </div>
+  </div> 
+  <div class="grid grid--uniform cr-item-box">
+   
+    {% for block in section.blocks %}  
+      
+      <div class="grid__item small--one-half medium-up--one-third cr-box text-center">
+          <img src="{{block.settings.icon-image | img_url: '250*250'}}" alt="{{block.settiings.icon-alt}}">
+          <h4>{{ block.settings.head }} </h4>
+        <p>{{ block.settings.box-text }}</p>
+      </div>
+    {% endfor %}
+
+ </div>
+
+ 
+{% schema %}
+{
+  "name": {
+    "cs": "Stránky career",
+    "da": "career",
+    "de": "career section",
+    "en": "career pages",
+    "es": "Páginas de career"
+    
+  }, 
+   "settings": [
+  {
+    "id": "text-box",
+    "type": "text",
+    "label": "Heading",
+    "default": "Title"
+  }
+],
+
+  "blocks": [
+  {
+    "type": "select",
+    "name": "Add career desc box",
+    "settings": [
+    {
+        "id": "icon-image",
+        "type": "image_picker",
+        "label": "Icon"
+     },
+     {
+        "id": "icon-alt",
+        "type": "text",
+        "label": "Description text",
+        "default": "image descirption "
+      },
+      {
+        "id": "head",
+        "type": "text",
+        "label": "Heading text",
+        "default": "heading "
+      },
+      {
+        "id": "box-text",
+        "type": "text",
+        "label": "Description text",
+        "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
+      }
+    ]
+  }
+], 
+"presets": [
+{
+  "name": "Career desc box Blocks",
+  "category": "CTA button",
+  "blocks": [
+    { 
+      "type": "select"
+    },
+    {
+      "type": "select"
+    }
+  ]
+}
+]
+}
+{% endschema %}
