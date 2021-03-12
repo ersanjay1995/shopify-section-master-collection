@@ -1,0 +1,11 @@
+<div class="list-view-item__price-column">
+    {% if product.available %}
+    {% include 'product-price', variant: product %}
+    {% endif %}
+    <form method="post" action="/cart/add">
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+    
+    <input type="submit" value="Add to cart" class="btn" />
+    <input type="hidden" name="return_to" value="back" />
+    </form>
+</div>
