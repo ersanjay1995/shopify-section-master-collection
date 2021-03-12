@@ -1,0 +1,84 @@
+
+  <div class="second-icon cs-top-menu">
+    <ul class="contect-src desktop-menu">  
+      
+    {% for block in section.blocks %}  
+      <li> <a class="cs-icon-link" href="{{ block.settings.cs-m-u }}"> <span class="cd-menut-icon"> {{ block.settings.cs-m-svg }}</span>
+        <span class="contact-text" data-live-text-setting="section.page-customer-service-menu.cs-m-Products">{{ block.settings.cs-m-tx }}</span> </a>
+    {% endfor %}               
+      
+    </ul>
+
+      <div class="mobile-cs-menu">
+        <div class="carousel"  data-flickity='{ "groupCells": 4 }'>
+          {% for block in section.blocks %}  
+            <div class="carousel-cell" >
+                 <a class="cs-icon-link" href="{{ block.settings.cs-m-u }}"> 
+                   <span class="cd-menut-icon">
+                    {{ block.settings.cs-m-svg }}
+                    </span><span class="contact-text">{{block.settings.cs-m-tx}}</span></a>
+        
+            </div>
+            {% endfor %}   
+          </div>
+        </div>
+        </div>
+  
+  {% schema %}
+  {
+    "name": "Customer Service Menu",
+    "class": "cs-m-enu-section",
+    "settings": [
+    
+      {
+        "type": "header",
+        "content": "Customer Service Menu Item"
+      }
+      
+    ],
+  
+    "blocks": [
+    
+    {
+      "type": "select",
+      "name": "Add Menu Item",
+      "settings": [
+      {
+        "type": "text",
+        "id": "cs-m-tx",
+        "label": "Item ",
+        "default": "Text "
+      },
+      {
+        "type": "html",
+        "id": "cs-m-svg",
+        "label": "Past here SVG code " 
+      },
+      
+      {
+        "type": "url",
+        "id": "cs-m-u",
+        "label": "link " 
+      }
+      ]
+    }
+  ],
+    "presets": [
+      {
+        "name": "CS Menu section",
+        "category": "Custom"
+      }
+    ]
+  }
+  {% endschema %}
+  
+{% stylesheet %}
+
+
+ 
+
+{% endstylesheet %}
+
+{% javascript %}
+ 
+{% endjavascript %}
