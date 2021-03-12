@@ -1,0 +1,95 @@
+{% if page.content.size > 0 %}
+  <div class="rte">
+    {{ page.content }}
+  </div>
+{% endif %}
+  {% comment %} FAQs sections  start{% endcomment %}
+  
+    <div class="faq-ac">
+    {% for block in section.blocks %}    
+      
+      {% if block.type == 'text' %}
+           <h1>{{ block.settings.cat-title }}</h1>
+      {% elsif block.type == 'select' %}
+        <main> 
+          <details class="dt-faq"> 
+          <summary>{{ block.settings.faqs-title }}</summary>
+          <div class="faq__content">
+            <p> {{ block.settings.faqs-answer }}</p>
+          </div>
+          <details>        
+        </main>
+          
+      {% endif %}
+        
+    {% endfor %}
+    </div>          
+  
+
+  {% comment %} FAQs sections end {% endcomment %}
+
+
+{% schema %}
+{
+  "name": "FAQs Blocks",
+	
+  "settings": [
+    {
+      "id": "faqs-title",
+      "type": "text",
+      "label": "Heading",
+      "default": "FAQs Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Add FAQs category",
+      "settings": [
+        {
+          "id": "cat-title",
+          "type": "text",
+       		"label": "FAQs Title"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "name": "Add FAQs",
+      "settings": [
+        {
+          "id": "faqs-title",
+          "type": "text",
+       		"label": "FAQs Title"
+        },
+        {
+          "id": "faqs-answer",
+          "type": "richtext",
+          "label": "answer text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs Blocks",
+      "category": "Custom",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
