@@ -1,0 +1,177 @@
+
+  <div class="second-icon cs-top-menu">
+    <ul class="contect-src desktop-menu">  
+      
+    {% for block in section.blocks %}  
+      <li> <a class="cs-icon-link" href="{{ block.settings.cs-m-u }}"> <span class="cd-menut-icon"> {{ block.settings.cs-m-svg }}</span>
+        <span class="contact-text" data-live-text-setting="section.page-customer-service-menu.cs-m-Products">{{ block.settings.cs-m-tx }}</span> </a>
+    {% endfor %}               
+      
+    </ul>
+
+      <div class="mobile-cs-menu">
+        <div class="carousel"  data-flickity='{ "groupCells": 4 }'>
+          {% for block in section.blocks %}  
+            <div class="carousel-cell" >
+                 <a class="cs-icon-link" href="{{ block.settings.cs-m-u }}"> 
+                   <span class="cd-menut-icon">
+                    {{ block.settings.cs-m-svg }}
+                    </span><span class="contact-text">{{block.settings.cs-m-tx}}</span></a>
+        
+            </div>
+            {% endfor %}   
+          </div>
+        </div>
+        </div>
+  
+  {% schema %}
+  {
+    "name": "Service Menu",
+    "class": "cs-m-enu-section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },  
+      {
+        "type": "header",
+        "content": "Customer Service Menu Item"
+      },
+      
+      {
+        "type": "text",
+        "id": "cs-m-Products",
+        "label": "Item ",
+        "default": "Products "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-Products-u",
+        "label": "Products link " 
+      },
+      {
+        "type": "text",
+        "id": "cs-m-Ordering",
+        "label": "Item ",
+        "default": "Ordering "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-Ordering-u",
+        "label": "Ordering link " 
+      },
+      {
+        "type": "text",
+        "id": "cs-m-Payments",
+        "label": "Item ",
+        "default": "Payments "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-Payments-u",
+        "label": "Payments link " 
+      },
+      {
+        "type": "text",
+        "id": "cs-m-Discounts",
+        "label": "Item ",
+        "default": "Discounts "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-Discounts-u",
+        "label": "Discounts link " 
+      },
+      {
+        "type": "text",
+        "id": "cs-m-Gift-cards",
+        "label": "Item ",
+        "default": "Gift cards "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-Gift-cards-u",
+        "label": "Gift cards link " 
+      },
+      {
+        "type": "text",
+        "id": "cs-m-Delivery",
+        "label": "Item ",
+        "default": "Delivery "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-Delivery-u",
+        "label": "Delivery link " 
+      },
+      {
+        "type": "text",
+        "id": "cs-m-Returns",
+        "label": "Item ",
+        "default": "Returns "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-Returns-u",
+        "label": "Returns link " 
+      },
+      {
+        "type": "text",
+        "id": "cs-m-About-us",
+        "label": "Item ",
+        "default": "About us "
+      },
+      {
+        "type": "url",
+        "id": "cs-m-About-us-u",
+        "label": "About uslink " 
+      }
+      
+    ],
+  
+    "blocks": [
+    
+    {
+      "type": "select",
+      "name": "Add Menu Item",
+      "settings": [
+      {
+        "type": "text",
+        "id": "cs-m-tx",
+        "label": "Item ",
+        "default": "Text "
+      },
+      {
+        "type": "html",
+        "id": "cs-m-svg",
+        "label": "Past here SVG code " 
+      },
+      
+      {
+        "type": "url",
+        "id": "cs-m-u",
+        "label": "link " 
+      }
+      ]
+    }
+  ],
+    "presets": [
+      {
+        "name": "CS Menu section",
+        "category": "Custom"
+      }
+    ]
+  }
+  {% endschema %}
+  
+{% stylesheet %}
+
+
+ 
+
+{% endstylesheet %}
+
+{% javascript %}
+ 
+{% endjavascript %}
